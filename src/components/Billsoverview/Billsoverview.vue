@@ -72,7 +72,7 @@
 						<q-item-side left @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()">{{getDueDate(biller)}}</q-item-side>
 						<q-item-side :image="biller.picture" @click="$refs.modalEditBiller.open()" />
 						<q-item-main :label="biller.title" @click="$refs.modalEditBiller.open()" />
-						<q-item-side class="negative" right :stamp="getAmountWithDollars(biller)" @click="$refs.modalEditIsPaid.open()" />
+						<q-item-side class="negative" right :stamp="getAmountWithDollars(biller)" @click="showPaidDialog(biller)" />
 					</q-item>
 				</q-list>
 			</q-card>
@@ -86,7 +86,7 @@
 						<q-item-side left @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()">{{getDueDate(biller)}}</q-item-side>
 						<q-item-side :image="biller.picture" @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()" />
 						<q-item-main :label="biller.title" @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()" />
-						<q-item-side class="paidBill" right :stamp="getAmountWithDollars(biller)" @click="$refs.modalEditIsPaid.open()" />
+						<q-item-side class="paidBill" right :stamp="getAmountWithDollars(biller)" @click="showPaidDialog(biller)" />
 					</q-item>
 				</q-list>
 			</q-card>
@@ -157,18 +157,6 @@
 				<q-card-main>
 					<q-input v-model="incomeMonthly" type="number" stack-label="Monthly Income" placeholder="Enter Income" />
 					<q-btn color="positive" round small icon="done" @click="$refs.modalEditIncome.close()"></q-btn>
-				</q-card-main>
-			</q-card>
-		</q-modal>
-
-		<q-modal ref="modalEditIsPaid" minimized>
-			<q-card>
-				<q-card-title>
-					{{selectedBiller.title}}
-				</q-card-title>
-				<q-card-main>
-					<q-btn color="positive" class="pull-right" @click="$refs.modalEditIsPaid.close()">Paid</q-btn>
-					<q-btn color="negative" @click="$refs.modalEditIsPaid.close()">Unpaid</q-btn>
 				</q-card-main>
 			</q-card>
 		</q-modal>
