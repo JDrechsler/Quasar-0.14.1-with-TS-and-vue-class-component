@@ -1,8 +1,6 @@
-# Quasar App
+# Quasar App - Test Bills Overview
 
-> A Quasar project with full support for typescript.
-For an example of a regular VueJs Project with typescript, see: 
-https://github.com/paulvanbladel/vue-webpack-ts-simple
+> A Quasar project with full support for typescript using vue-class-component
 
 ## Build Setup
 
@@ -15,7 +13,4 @@ $ quasar dev
 
 # build for production with minification
 $ quasar build
-
-# lint code
-$ quasar lint
 ```
