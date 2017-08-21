@@ -5,8 +5,6 @@ import Firebase from 'firebase'
 import { Dialog } from 'quasar'
 import GoogleImageSearch from './../../classes/GoogleImageSearch.js'
 
-const today = new Date()
-
 interface Biller {
 	uid: string,
 	title: string,
@@ -83,7 +81,7 @@ export default class Billsoverview extends Vue {
 		]
 	}
 
-	today: number = 0
+	today: Date = new Date
 
 	searchIcon: string = "search"
 
@@ -270,30 +268,30 @@ export default class Billsoverview extends Vue {
 		return numPaidBills
 	}
 
-	get getMoneySpentOnBillsThisMonth(): number {
-		var moneySpent: number = 0
+	get getTotalPaidBillsThisMonth(): number {
+		var paidTotal: number = 0
 		this.billers.forEach(bill => {
 			if (bill.isPaid) {
-				moneySpent += bill.amount
+				paidTotal += bill.amount
 			}
 		})
-		return moneySpent
+		return paidTotal
 	}
 
-	get getTotalUnpaidBillsThisMonth(): string {
+	get getTotalUnpaidBillsThisMonth(): number {
 		var unpaidTotal: number = 0
 		this.billers.forEach(bill => {
 			if (!bill.isPaid) {
 				unpaidTotal = unpaidTotal + bill.amount
 			}
 		})
-		return unpaidTotal.toFixed(2)
+		return unpaidTotal
 	}
 
-	get getRemainingMoneyThisMonth(): string {
+	get getRemainingMoneyThisMonth(): number {
 		var remainingMoney: number = 0
-		remainingMoney = this.incomeMonthly - this.getMoneySpentOnBillsThisMonth
-		return remainingMoney.toFixed(2)
+		remainingMoney = this.incomeMonthly - this.getTotalPaidBillsThisMonth
+		return remainingMoney
 	}
 
 	get getPaidBills(): Array<Biller> {
@@ -312,6 +310,34 @@ export default class Billsoverview extends Vue {
 		return this.newBiller.title
 	}
 
+	get getUnPaidBillsDueToday(): Array<Biller> {
+		var unPaidBillersDueToday: Array<Biller> = []
+		for (var index = 0; index < this.billers.length; index++) {
+			var biller = this.billers[index]
+			if (biller.dayOfMonth == this.today.getDate()) {
+				if (!biller.isPaid) {
+					unPaidBillersDueToday.push(biller)
+				}
+			}
+		}
+
+		return unPaidBillersDueToday
+	}
+
+	get getUnPaidBillsDueNextThreeDays(): Array<Biller> {
+		var todayDate = this.today.getDate()
+		var unPaidBillersDueNTD: Array<Biller> = []
+		for (var index = 0; index < this.billers.length; index++) {
+			var biller = this.billers[index]
+			if (biller.dayOfMonth > todayDate && biller.dayOfMonth < todayDate + 4) {
+				if (!biller.isPaid) {
+					unPaidBillersDueNTD.push(biller)
+				}
+			}
+		}
+		return unPaidBillersDueNTD
+	}
+
 
 
 	@Watch('newBillerTitle')
@@ -326,6 +352,8 @@ export default class Billsoverview extends Vue {
 
 
 	mounted() {
+
+		console.log('App mounted')
 
 		this.billers = []
 

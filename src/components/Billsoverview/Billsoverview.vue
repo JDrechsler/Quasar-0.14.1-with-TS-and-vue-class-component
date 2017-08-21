@@ -3,9 +3,17 @@
 
 		<div class="justify-around">
 
-			<!-- <q-alert key="negative" color="negative" style="margin-bottom: 1.5rem">
-				Bill xyz is due tomorrow!
-			</q-alert> -->
+			<div v-if="getUnPaidBillsDueToday.length > 0">
+				<q-alert v-for="(unPaidBill,index) in getUnPaidBillsDueToday" :key="unPaidBill" color="negative" style="margin-bottom: 1.5rem">
+					{{unPaidBill.title}} bill is due today!
+				</q-alert>
+			</div>
+
+			<div v-if="getUnPaidBillsDueNextThreeDays.length > 0">
+				<q-alert v-for="(unPaidBill,index) in getUnPaidBillsDueNextThreeDays" :key="unPaidBill" color="warning" style="margin-bottom: 1.5rem">
+					{{unPaidBill.title}} bill is upcoming on {{unPaidBill.dateOfMonth}}!
+				</q-alert>
+			</div>
 
 			<!-- Summary -->
 
@@ -35,7 +43,7 @@
 						</q-item-side>
 						<q-item-main>
 							<q-item-tile label>Unpaid Bills</q-item-tile>
-							<q-item-tile sublabel>${{getTotalUnpaidBillsThisMonth}}</q-item-tile>
+							<q-item-tile sublabel>${{getTotalUnpaidBillsThisMonth.toFixed(2)}}</q-item-tile>
 						</q-item-main>
 					</q-item>
 
@@ -45,7 +53,7 @@
 						</q-item-side>
 						<q-item-main>
 							<q-item-tile label>Paid Bills</q-item-tile>
-							<q-item-tile sublabel>${{getMoneySpentOnBillsThisMonth}}</q-item-tile>
+							<q-item-tile sublabel>${{getTotalPaidBillsThisMonth.toFixed(2)}}</q-item-tile>
 						</q-item-main>
 					</q-item>
 
@@ -57,7 +65,7 @@
 						</q-item-side>
 						<q-item-main>
 							<q-item-tile label>Remaining Balance</q-item-tile>
-							<q-item-tile sublabel>${{getRemainingMoneyThisMonth}}</q-item-tile>
+							<q-item-tile sublabel>${{getRemainingMoneyThisMonth.toFixed(2)}}</q-item-tile>
 						</q-item-main>
 					</q-item>
 				</q-list>
@@ -66,10 +74,12 @@
 			<!-- Unpaid Bills  -->
 			<q-card inline>
 				<q-list>
-					<q-list-header>Unpaid Bills</q-list-header>
+					<q-list-header>Unpaid Bills
+						<q-item-tile color="negative" icon="remove" />
+					</q-list-header>
 					<q-item v-if="getUnpaidBills < 1">You do not have unpaid bills. Yay!</q-item>
-					<q-item v-for="(biller, index) in getUnpaidBills" @click="Object.assign(selectedBiller, biller)">
-						<q-item-side left @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()">{{getDueDate(biller)}}</q-item-side>
+					<q-item v-for="(biller, index) in getUnpaidBills" :key="biller" @click="Object.assign(selectedBiller, biller)">
+						<q-item-side left @click="$refs.modalEditBiller.open()">{{getDueDate(biller)}}</q-item-side>
 						<q-item-side :image="biller.picture" @click="$refs.modalEditBiller.open()" />
 						<q-item-main :label="biller.title" @click="$refs.modalEditBiller.open()" />
 						<q-item-side class="negative" right :stamp="getAmountWithDollars(biller)" @click="showPaidDialog(biller)" />
@@ -80,12 +90,14 @@
 			<!-- Paid Bills  -->
 			<q-card inline>
 				<q-list>
-					<q-list-header>Paid Bills</q-list-header>
+					<q-list-header>Paid Bills
+						<q-item-tile color="blue" icon="check" />
+					</q-list-header>
 					<q-item v-if="getPaidBills < 1">You do not have paid bills.</q-item>
-					<q-item v-for="(biller, index) in getPaidBills" @click="Object.assign(selectedBiller, biller)">
-						<q-item-side left @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()">{{getDueDate(biller)}}</q-item-side>
-						<q-item-side :image="biller.picture" @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()" />
-						<q-item-main :label="biller.title" @click="Object.assign(selectedBiller, biller);$refs.modalEditBiller.open()" />
+					<q-item v-for="(biller, index) in getPaidBills" :key="biller" @click="Object.assign(selectedBiller, biller)">
+						<q-item-side left @click="$refs.modalEditBiller.open()">{{getDueDate(biller)}}</q-item-side>
+						<q-item-side :image="biller.picture" @click="$refs.modalEditBiller.open()" />
+						<q-item-main :label="biller.title" @click="$refs.modalEditBiller.open()" />
 						<q-item-side class="paidBill" right :stamp="getAmountWithDollars(biller)" @click="showPaidDialog(biller)" />
 					</q-item>
 				</q-list>

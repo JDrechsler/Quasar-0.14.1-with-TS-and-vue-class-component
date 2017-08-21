@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<q-layout ref="layout" view="hHh LpR fFf" :right-breakpoint="1100">
+		<q-layout ref="layout" view="hHh LpR fFf" :left-breakpoint="0">
 
 			<q-toolbar slot="header">
 				<q-btn flat @click="$refs.layout.toggleLeft()">
@@ -21,17 +21,17 @@
 						<q-item-main label="Bills Overview" />
 					</q-side-link>
 					<!-- <q-side-link item to="/chat">
-												<q-item-side icon="chat" />
-												<q-item-main label="Gitter Channel" />
-											</q-side-link>
-											<q-side-link item to="/Feed">
-												<q-item-side icon="rss feed" />
-												<q-item-main label="Feed" sublabel="@quasarframework" />
-											</q-side-link>
-											<q-side-link item to="/Grouptest">
-												<q-item-side icon="warning" />
-												<q-item-main label="GroupTest" />
-											</q-side-link> -->
+							<q-item-side icon="chat" />
+							<q-item-main label="Gitter Channel" />
+						</q-side-link>
+						<q-side-link item to="/Feed">
+							<q-item-side icon="rss feed" />
+							<q-item-main label="Feed" sublabel="@quasarframework" />
+						</q-side-link>
+						<q-side-link item to="/Grouptest">
+							<q-item-side icon="warning" />
+							<q-item-main label="GroupTest" />
+						</q-side-link> -->
 				</q-list>
 			</div>
 
