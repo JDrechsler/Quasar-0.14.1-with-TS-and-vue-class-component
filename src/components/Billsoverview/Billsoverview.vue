@@ -1,19 +1,19 @@
 <template>
 	<div class="layout-padding">
 
+		<div v-if="getUnPaidBillsDueToday.length > 0">
+			<q-alert v-for="(unPaidBill,index) in getUnPaidBillsDueToday" :key="unPaidBill" color="negative" style="margin-bottom: 1.5rem">
+				{{unPaidBill.title}} bill is due today!
+			</q-alert>
+		</div>
+
+		<div v-if="getUnPaidBillsDueNextThreeDays.length > 0">
+			<q-alert v-for="(unPaidBill,index) in getUnPaidBillsDueNextThreeDays" :key="unPaidBill" color="warning" style="margin-bottom: 1.5rem">
+				{{unPaidBill.title}} bill is upcoming on {{unPaidBill.dateOfMonth}}!
+			</q-alert>
+		</div>
+
 		<div class="justify-around">
-
-			<div v-if="getUnPaidBillsDueToday.length > 0">
-				<q-alert v-for="(unPaidBill,index) in getUnPaidBillsDueToday" :key="unPaidBill" color="negative" style="margin-bottom: 1.5rem">
-					{{unPaidBill.title}} bill is due today!
-				</q-alert>
-			</div>
-
-			<div v-if="getUnPaidBillsDueNextThreeDays.length > 0">
-				<q-alert v-for="(unPaidBill,index) in getUnPaidBillsDueNextThreeDays" :key="unPaidBill" color="warning" style="margin-bottom: 1.5rem">
-					{{unPaidBill.title}} bill is upcoming on {{unPaidBill.dateOfMonth}}!
-				</q-alert>
-			</div>
 
 			<!-- Summary -->
 
@@ -179,7 +179,7 @@
 					Remove: {{selectedBiller.title}}?
 				</q-card-title>
 				<q-card-main>
-					<q-btn color="positive" class="pull-right" round small icon="done" @click="fbRemoveBiller(selectedBiller.uid);$refs.modalEditBiller.close();$refs.modalEditBiller.close()"></q-btn>
+					<q-btn color="positive" class="pull-right" round small icon="done" @click="$refs.modalConfirmRemoveBiller.close();$refs.modalEditBiller.close();fbRemoveBiller(selectedBiller.uid)"></q-btn>
 					<q-btn color="negative" round small icon="close" @click="$refs.modalConfirmRemoveBiller.close()"></q-btn>
 				</q-card-main>
 			</q-card>

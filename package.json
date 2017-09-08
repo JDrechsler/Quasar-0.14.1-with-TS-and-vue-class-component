@@ -10,9 +10,10 @@
 	},
 	"dependencies": {
 		"axios": "^0.16.2",
+		"datajs": "^1.0.3",
 		"firebase": "4.3.0",
 		"lodash": "^4.17.4",
-		"odata": "0.3.4",
+		"odata": "^0.3.4",
 		"quasar-extras": "0.0.7",
 		"quasar-framework": "^0.14.1",
 		"vue": "^2.3.4",

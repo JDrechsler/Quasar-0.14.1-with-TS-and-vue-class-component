@@ -56,7 +56,7 @@ export default class Billsoverview extends Vue {
 		}
 	]
 
-	incomeMonthly: number = 2700
+	incomeMonthly: number = 9999
 
 	billers = [
 		{
